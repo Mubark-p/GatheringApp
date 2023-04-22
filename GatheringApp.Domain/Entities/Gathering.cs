@@ -4,9 +4,13 @@ using GatheringApp.Domain.DomainEvents;
 using GatheringApp.Domain.Enums;
 using GatheringApp.Domain.Execptions;
 using GatheringApp.Domain.Premitives;
+using GatheringApp.Domain.Repositories;
 using GatheringApp.Domain.Shareds;
+using MediatR;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
+using static GatheringApp.Domain.Errors.DomainErrors;
+using System.Threading;
 
 namespace GatheringApp.Domain.Entities;
 
@@ -139,13 +143,31 @@ public int? MaximumNumberOfAttendee { get;  private set; }
         );
         this._invitations.Add(invitation);
         return invitation;
-    
     }
 
 
-    public Attendee AcceptInvitation(Invitation invitation)
+    public Result<Attendee> AcceptInvitation(Invitation invitation)
     {
+        var isExpire = (this.Type == GatheringType.WithFixedNumberOfAttendees &&
+                      this.NumberOfAttendee > this.MaximumNumberOfAttendee) ||
+                      (this.Type == GatheringType.WithExpirationForInvitations &&
+                        this.ExpireDateOfInvitaionUtc < DateTime.UtcNow);
+
+
+
+        if (isExpire)
+        {
+            invitation.Expire();
+           
+            return Result.Failure<Attendee>(new(
+            "Gathering.Expired",
+            "Can't accept invitation for expired gathering."));
+
+
+        }
+
         Attendee attendee = invitation.Accept();
+
         RisedDomainEvent(new InvitationAcceptedDomainEvent(invitation.Id, Id));
         this._attends.Add(attendee);
         ++this.NumberOfAttendee;

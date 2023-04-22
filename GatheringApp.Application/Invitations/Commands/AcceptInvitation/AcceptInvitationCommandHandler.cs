@@ -2,6 +2,7 @@
 using GatheringApp.Domain.Entities;
 using GatheringApp.Domain.Enums;
 using GatheringApp.Domain.Repositories;
+using GatheringApp.Domain.Shareds;
 using MediatR;
 
 namespace GatheringApp.Application.Invitations.Commands.AcceptInvitation;
@@ -50,25 +51,15 @@ public sealed class AcceptInvitationCommandHandler :
         }
         
 
-        var isExpire = (gathering.Type == GatheringType.WithFixedNumberOfAttendees &&
-                       gathering.NumberOfAttendee > gathering.MaximumNumberOfAttendee) ||
-                       (gathering.Type == GatheringType.WithExpirationForInvitations &&
-                         gathering.ExpireDateOfInvitaionUtc < DateTime.UtcNow);
-
-
-
-        if (isExpire) {
-            invitation.Expire();
-            await unitOfWork.SaveChangesAsync(cancellationToken);
-            return Unit.Value;  
-        
-        
-        }
-
-
-        Attendee attendee = gathering.AcceptInvitation(invitation);
        
-        _attendeeRepository.Add(attendee);  
+
+        Result<Attendee> attendee = gathering.AcceptInvitation(invitation);
+       
+        if(attendee.IsSuccess)
+        _attendeeRepository.Add(attendee.Vlaue);  
+
+
+
 
         await unitOfWork.SaveChangesAsync(cancellationToken);   
 
