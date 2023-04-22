@@ -146,7 +146,7 @@ public int? MaximumNumberOfAttendee { get;  private set; }
     public Attendee AcceptInvitation(Invitation invitation)
     {
         Attendee attendee = invitation.Accept();
-       // RisedDomainEvent(new InvitationAcceptedDomainEvent(attendee.invi))
+        RisedDomainEvent(new InvitationAcceptedDomainEvent(invitation.Id, Id));
         this._attends.Add(attendee);
         ++this.NumberOfAttendee;
 
