@@ -5,5 +5,5 @@ namespace GatheringApp.Domain.DomainEvents;
 public sealed  record InvitationAcceptedDomainEvent
     (
     Guid InvitationId,  Guid GatheringId
-    ):IDomainEvent
+    ):IDomainEvent;
  
