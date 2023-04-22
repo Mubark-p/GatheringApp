@@ -1,5 +1,6 @@
 ﻿
 
+using GatheringApp.Domain.DomainEvents;
 using GatheringApp.Domain.Enums;
 using GatheringApp.Domain.Execptions;
 using GatheringApp.Domain.Premitives;
@@ -142,11 +143,14 @@ public int? MaximumNumberOfAttendee { get;  private set; }
     }
 
 
-    public void AcceptInvitation(Attendee attendee)
+    public Attendee AcceptInvitation(Invitation invitation)
     {
+        Attendee attendee = invitation.Accept();
+       // RisedDomainEvent(new InvitationAcceptedDomainEvent(attendee.invi))
         this._attends.Add(attendee);
         ++this.NumberOfAttendee;
 
+        return attendee;
 
     }
 }

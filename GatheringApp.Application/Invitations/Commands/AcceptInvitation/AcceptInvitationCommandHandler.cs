@@ -71,9 +71,9 @@ public sealed class AcceptInvitationCommandHandler :
         
         
         }
-        Attendee attendee = invitation.Accept();
-       
-        gathering.AcceptInvitation(attendee);
+
+
+        Attendee attendee = gathering.AcceptInvitation(invitation);
        
         _attendeeRepository.Add(attendee);  
 
