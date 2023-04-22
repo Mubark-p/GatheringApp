@@ -8,10 +8,6 @@
 
   <ItemGroup>
     <Folder Include="DomainEvents\" />
-    <Folder Include="Execptions\" />
-    <Folder Include="Errors\" />
-    <Folder Include="ValueObjects\" />
-    <Folder Include="Shareds\" />
   </ItemGroup>
 
 </Project>
