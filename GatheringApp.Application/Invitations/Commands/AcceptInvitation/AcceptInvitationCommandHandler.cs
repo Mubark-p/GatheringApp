@@ -48,14 +48,7 @@ public sealed class AcceptInvitationCommandHandler :
         {
             return Unit.Value;
         }
-        var member =  await _memberRepository
-            .GetByIDAsync(invitation.MemberId, cancellationToken);    
-       
         
-       
-
-        if(member is null ) { return Unit.Value; }
-
 
         var isExpire = (gathering.Type == GatheringType.WithFixedNumberOfAttendees &&
                        gathering.NumberOfAttendee > gathering.MaximumNumberOfAttendee) ||
