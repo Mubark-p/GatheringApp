@@ -7,7 +7,7 @@ namespace GatheringApp.Domain.ValueObjects;
 public sealed class FirstName : ValueObject
 {
 
-    private const int MaxLength = 40;
+    public const int MaxLength = 40;
     public string Value { get; init; }
 
     private FirstName(string value)
