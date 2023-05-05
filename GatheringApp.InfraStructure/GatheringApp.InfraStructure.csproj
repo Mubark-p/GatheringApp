@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GatheringApp.Application\GatheringApp.Application.csproj" />
+  </ItemGroup>
+
 </Project>
