@@ -1,4 +1,4 @@
-﻿using GatheringApp.Persistencel;
+﻿using GatheringApp.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 

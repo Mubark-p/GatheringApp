@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 
-namespace GatheringApp.Persistence;
+namespace GatheringApp.InfraStructure
+    ;
 
 public static class AssemblyReferrences
 
